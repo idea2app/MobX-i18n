@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "UMD",
+        "moduleResolution": "Node",
+        "experimentalDecorators": true,
+        "target": "ES5",
+        "lib": ["ES2022", "DOM"],
+        "declaration": true,
+        "outDir": "dist/"
+    },
+    "include": ["source/*"]
+}
