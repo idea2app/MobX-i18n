@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx';
 
+export * from './utility';
+
 export type TranslationResolver = (data: Record<string, any>) => string;
 
 export type TranslationResolverData<T> = T extends TranslationResolver
@@ -29,9 +31,25 @@ export class TranslationModel<Name extends string, Key extends string> {
     currentMap: TranslationMap<Key> = {} as TranslationMap<Key>;
 
     constructor(public configuration: TranslationConfiguration<Name, Key>) {
-        for (const name in configuration)
-            if (typeof configuration[name] !== 'function')
-                this.changeLanguage(name);
+        if (!this.currentLanguage) {
+            for (const name in configuration)
+                if (typeof configuration[name] !== 'function')
+                    this.currentLanguage = name;
+
+            if (!this.currentLanguage)
+                throw ReferenceError('One static language map is required');
+        }
+        if (typeof window === 'undefined') return;
+
+        this.changeLanguage(this.currentLanguage);
+
+        window.addEventListener('languagechange', () =>
+            this.changeLanguage(navigator.language as Name)
+        );
+    }
+
+    protected setLanguage(name: Name) {
+        document.documentElement.lang = this.currentLanguage = name;
     }
 
     @action
@@ -39,7 +57,8 @@ export class TranslationModel<Name extends string, Key extends string> {
         const language = this.configuration[name];
 
         if (typeof language !== 'function') {
-            this.currentLanguage = name;
+            this.setLanguage(name);
+
             return (this.currentMap = language as TranslationMap<Key>);
         }
         this.loading = true;
@@ -47,11 +66,25 @@ export class TranslationModel<Name extends string, Key extends string> {
         const { default: map } = await language();
 
         this.loading = false;
-        this.currentLanguage = name;
+
+        this.setLanguage(name);
+
         return (this.currentMap = this.configuration[name] = map);
     }
 
-    t<K extends Key>(
+    async loadLanguages(names: string[]) {
+        for (const name of names) {
+            const language = this.configuration[name as Name];
+
+            if (language)
+                try {
+                    return await this.changeLanguage(name as Name);
+                } catch {}
+        }
+        return this.changeLanguage(this.currentLanguage);
+    }
+
+    textOf<K extends Key>(
         key: K,
         data?: TranslationResolverData<TranslationMap<Key>[K]>
     ): string {
@@ -66,4 +99,6 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         return value(data);
     }
+
+    t = this.textOf.bind(this);
 }

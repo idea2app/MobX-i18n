@@ -1,10 +1,19 @@
 {
     "name": "mobx-i18n",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
-    "description": "",
-    "keywords": [],
+    "description": "Responsive Translation utility based on TypeScript & MobX",
+    "keywords": [
+        "translate",
+        "international",
+        "i18n",
+        "utility",
+        "toolkit",
+        "typescript",
+        "mobx",
+        "responsive"
+    ],
     "homepage": "https://ideapp.dev/MobX-i18n/",
     "repository": {
         "type": "git",
@@ -16,13 +25,15 @@
     "source": "source/index.ts",
     "types": "dist/index.d.ts",
     "main": "dist/index.js",
-    "dependencies": {
-        "mobx": "^5.15.7"
+    "peerDependencies": {
+        "mobx": ">=4 <6"
     },
     "devDependencies": {
         "husky": "^8.0.2",
         "lint-staged": "^13.0.3",
+        "mobx": "^5.15.7",
         "prettier": "^2.7.1",
+        "typedoc": "^0.23.21",
         "typescript": "~4.9.3"
     },
     "prettier": {
@@ -37,7 +48,7 @@
     "scripts": {
         "prepare": "husky install",
         "test": "lint-staged",
-        "build": "rm -rf dist/  &&  tsc",
+        "build": "rm -rf dist/ docs/  &&  tsc  &&  typedoc source/",
         "prepublishOnly": "npm test  &&  npm run build"
     }
 }
