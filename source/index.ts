@@ -39,7 +39,7 @@ export class TranslationModel<Name extends string, Key extends string> {
             if (!this.currentLanguage)
                 throw ReferenceError('One static language map is required');
         }
-        if (typeof window === 'undefined') return;
+        if (!globalThis.window) return;
 
         this.changeLanguage(this.currentLanguage);
 
@@ -49,7 +49,9 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     protected setLanguage(name: Name) {
-        document.documentElement.lang = this.currentLanguage = name;
+        this.currentLanguage = name;
+
+        if (globalThis.document) document.documentElement.lang = name;
     }
 
     @action

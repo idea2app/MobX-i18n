@@ -101,7 +101,9 @@ export default class HomePage extends PureComponent {
                     }
                 >
                     {Object.entries(LanguageName).map(([code, name]) => (
-                        <option value={code}>{name}</option>
+                        <option key={code} value={code}>
+                            {name}
+                        </option>
                     ))}
                 </select>
                 <p>
@@ -121,6 +123,6 @@ export default class HomePage extends PureComponent {
 https://github.com/infinum/react-mobx-translatable
 
 [1]: https://www.typescriptlang.org/
-[2]: https://github.com/mobxjs/mobx/blob/mobx4and5/docs/
+[2]: https://github.com/mobxjs/mobx/tree/mobx4and5/docs
 [3]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
 [4]: https://nodei.co/npm/mobx-i18n/
