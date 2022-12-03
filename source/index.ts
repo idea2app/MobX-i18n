@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 export * from './utility';
 
@@ -24,11 +24,18 @@ export class TranslationModel<Name extends string, Key extends string> {
     @observable
     loading = false;
 
+    defaultLanguage: Name = globalThis.navigator?.language as Name;
+
     @observable
-    currentLanguage: Name = globalThis.navigator?.language as Name;
+    currentLanguage = this.defaultLanguage;
 
     @observable
     currentMap: TranslationMap<Key> = {} as TranslationMap<Key>;
+
+    @computed
+    get defaultMap() {
+        return this.configuration[this.defaultLanguage] as TranslationMap<Key>;
+    }
 
     constructor(public configuration: TranslationConfiguration<Name, Key>) {
         if (!this.currentLanguage) {
@@ -39,6 +46,8 @@ export class TranslationModel<Name extends string, Key extends string> {
             if (!this.currentLanguage)
                 throw ReferenceError('One static language map is required');
         }
+        this.defaultLanguage = this.currentLanguage;
+
         if (!globalThis.window) return;
 
         this.changeLanguage(this.currentLanguage);
@@ -90,7 +99,7 @@ export class TranslationModel<Name extends string, Key extends string> {
         key: K,
         data?: TranslationResolverData<TranslationMap<Key>[K]>
     ): string {
-        const value = this.currentMap[key];
+        const value = this.currentMap[key] || this.defaultMap[key];
 
         if (typeof value === 'string') return value;
 
@@ -98,9 +107,8 @@ export class TranslationModel<Name extends string, Key extends string> {
             throw ReferenceError(
                 'Input data is required for Translation Resolver'
             );
-
         return value(data);
     }
 
-    t = this.textOf.bind(this);
+    t = this.textOf.bind(this) as TranslationModel<Name, Key>['textOf'];
 }

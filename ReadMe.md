@@ -6,6 +6,15 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 
 [![NPM](https://nodei.co/npm/mobx-i18n.png?downloads=true&downloadRank=true&stars=true)][4]
 
+## Features
+
+-   [x] **Type hinting** of Text keys
+-   [x] **Lambda Expression** values
+-   [x] Space utility for CJK & other characters
+-   [x] **Responsive re-rendering**
+-   [x] **Async loading** of Language packages
+-   [x] support HTTP protocol for **Server-side rendering**
+
 ## React/Next.js example
 
 Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
