@@ -13,7 +13,8 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 -   [x] Space utility for CJK & other characters
 -   [x] **Responsive re-rendering**
 -   [x] **Async loading** of Language packages
--   [x] support HTTP protocol for **Server-side rendering**
+-   [x] support **HTTP protocol** for **Server-side rendering**
+-   [x] support BOM/DOM language API for Client-side rendering
 
 ## React/Next.js example
 

@@ -2,7 +2,9 @@ import { observable, computed, action } from 'mobx';
 
 export * from './utility';
 
-export type TranslationResolver = (data: Record<string, any>) => string;
+export type TranslationResolver<T extends Record<string, any> = any> = (
+    data: T
+) => string;
 
 export type TranslationResolverData<T> = T extends TranslationResolver
     ? Parameters<T>[0]
@@ -24,10 +26,10 @@ export class TranslationModel<Name extends string, Key extends string> {
     @observable
     loading = false;
 
-    defaultLanguage: Name = globalThis.navigator?.language as Name;
+    defaultLanguage: Name;
 
     @observable
-    currentLanguage = this.defaultLanguage;
+    currentLanguage?: Name;
 
     @observable
     currentMap: TranslationMap<Key> = {} as TranslationMap<Key>;
@@ -38,20 +40,19 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     constructor(public configuration: TranslationConfiguration<Name, Key>) {
-        if (!this.currentLanguage) {
+        if (!this.defaultLanguage) {
             for (const name in configuration)
                 if (typeof configuration[name] !== 'function')
-                    this.currentLanguage = name;
+                    this.defaultLanguage = name;
 
-            if (!this.currentLanguage)
+            if (!this.defaultLanguage)
                 throw ReferenceError('One static language map is required');
         }
-        this.defaultLanguage = this.currentLanguage;
-
         if (!globalThis.window) return;
 
-        this.changeLanguage(this.currentLanguage);
-
+        this.loadLanguages(
+            [localStorage.language, ...navigator.languages].filter(Boolean)
+        );
         window.addEventListener('languagechange', () =>
             this.changeLanguage(navigator.language as Name)
         );
@@ -60,7 +61,8 @@ export class TranslationModel<Name extends string, Key extends string> {
     protected setLanguage(name: Name) {
         this.currentLanguage = name;
 
-        if (globalThis.document) document.documentElement.lang = name;
+        if (globalThis.document)
+            localStorage.language = document.documentElement.lang = name;
     }
 
     @action
@@ -84,15 +86,23 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     async loadLanguages(names: string[]) {
-        for (const name of names) {
-            const language = this.configuration[name as Name];
+        const languages = Object.keys(this.configuration).sort(
+            ({ length: a }, { length: b }) => b - a
+        );
 
+        for (const name of names) {
+            const language = languages.includes(name)
+                ? name
+                : languages.find(
+                      language =>
+                          name.startsWith(language) || language.startsWith(name)
+                  );
             if (language)
                 try {
                     return await this.changeLanguage(name as Name);
                 } catch {}
         }
-        return this.changeLanguage(this.currentLanguage);
+        return this.changeLanguage(this.defaultLanguage);
     }
 
     textOf<K extends Key>(
