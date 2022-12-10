@@ -1,3 +1,4 @@
+import 'cookie-store';
 import { observable, computed, action } from 'mobx';
 
 export * from './utility';
@@ -29,7 +30,7 @@ export class TranslationModel<Name extends string, Key extends string> {
     defaultLanguage: Name;
 
     @observable
-    currentLanguage?: Name;
+    currentLanguage: Name;
 
     @observable
     currentMap: TranslationMap<Key> = {} as TranslationMap<Key>;
@@ -40,19 +41,22 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     constructor(public configuration: TranslationConfiguration<Name, Key>) {
-        if (!this.defaultLanguage) {
-            for (const name in configuration)
-                if (typeof configuration[name] !== 'function')
-                    this.defaultLanguage = name;
+        for (const name in configuration)
+            if (typeof configuration[name] !== 'function')
+                this.defaultLanguage = name;
 
-            if (!this.defaultLanguage)
-                throw ReferenceError('One static language map is required');
-        }
+        if (!this.defaultLanguage)
+            throw ReferenceError('One static language map is required');
+
         if (!globalThis.window) return;
 
-        this.loadLanguages(
-            [localStorage.language, ...navigator.languages].filter(Boolean)
-        );
+        window.cookieStore
+            .get({ name: 'language' })
+            .then(item =>
+                this.loadLanguages(
+                    [item?.value, ...navigator.languages].filter(Boolean)
+                )
+            );
         window.addEventListener('languagechange', () =>
             this.changeLanguage(navigator.language as Name)
         );
@@ -62,7 +66,10 @@ export class TranslationModel<Name extends string, Key extends string> {
         this.currentLanguage = name;
 
         if (globalThis.document)
-            localStorage.language = document.documentElement.lang = name;
+            window.cookieStore.set(
+                'language',
+                (document.documentElement.lang = name)
+            );
     }
 
     @action
@@ -99,7 +106,7 @@ export class TranslationModel<Name extends string, Key extends string> {
                   );
             if (language)
                 try {
-                    return await this.changeLanguage(name as Name);
+                    return await this.changeLanguage(language as Name);
                 } catch {}
         }
         return this.changeLanguage(this.defaultLanguage);
@@ -111,7 +118,7 @@ export class TranslationModel<Name extends string, Key extends string> {
     ): string {
         const value = this.currentMap[key] || this.defaultMap[key];
 
-        if (typeof value === 'string') return value;
+        if (typeof value !== 'function') return value;
 
         if (!data)
             throw ReferenceError(

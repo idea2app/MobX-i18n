@@ -4,31 +4,33 @@ specifiers:
   '@parcel/packager-ts': ~2.6.2
   '@parcel/transformer-typescript-types': ~2.6.2
   '@swc/helpers': ^0.4.14
+  cookie-store: ^3.0.0
   husky: ^8.0.2
   lint-staged: ^13.1.0
   mobx: ^5.15.7
   parcel: ~2.6.2
-  prettier: ^2.8.0
+  prettier: ^2.8.1
   regenerator-runtime: ^0.13.11
   typedoc: ^0.23.21
   typedoc-plugin-mdn-links: ^2.0.0
-  typescript: ~4.9.3
+  typescript: ~4.9.4
 
 dependencies:
   '@swc/helpers': 0.4.14
+  cookie-store: 3.0.0
   regenerator-runtime: 0.13.11
 
 devDependencies:
   '@parcel/packager-ts': 2.6.2
-  '@parcel/transformer-typescript-types': 2.6.2_typescript@4.9.3
+  '@parcel/transformer-typescript-types': 2.6.2_typescript@4.9.4
   husky: 8.0.2
   lint-staged: 13.1.0
   mobx: 5.15.7
   parcel: 2.6.2
-  prettier: 2.8.0
-  typedoc: 0.23.21_typescript@4.9.3
+  prettier: 2.8.1
+  typedoc: 0.23.21_typescript@4.9.4
   typedoc-plugin-mdn-links: 2.0.0_typedoc@0.23.21
-  typescript: 4.9.3
+  typescript: 4.9.4
 
 packages:
 
@@ -810,7 +812,7 @@ packages:
       semver: 5.7.1
     dev: true
 
-  /@parcel/transformer-typescript-types/2.6.2_typescript@4.9.3:
+  /@parcel/transformer-typescript-types/2.6.2_typescript@4.9.4:
     resolution: {integrity: sha512-p2Ctikbnfof/GbWE67Fg0VlKkTYfbDujxHuk+qAm7XXGZe48dOc7l7CQ7swvapkUWkL3rKtsLAf3HecLz4D10Q==}
     engines: {node: '>= 12.0.0', parcel: ^2.6.2}
     peerDependencies:
@@ -819,22 +821,22 @@ packages:
       '@parcel/diagnostic': 2.6.2
       '@parcel/plugin': 2.6.2
       '@parcel/source-map': 2.1.1
-      '@parcel/ts-utils': 2.6.2_typescript@4.9.3
+      '@parcel/ts-utils': 2.6.2_typescript@4.9.4
       '@parcel/utils': 2.6.2
       nullthrows: 1.1.1
-      typescript: 4.9.3
+      typescript: 4.9.4
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
 
-  /@parcel/ts-utils/2.6.2_typescript@4.9.3:
+  /@parcel/ts-utils/2.6.2_typescript@4.9.4:
     resolution: {integrity: sha512-PqmjyBYIa56bSjeumJj/tEFooYOBePw8PVi9dU1dkuJoBtDJl/+s/GPW2JnupaplKnlEtX8ag922vjua4A9gsg==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
       typescript: '>=3.0.0'
     dependencies:
       nullthrows: 1.1.1
-      typescript: 4.9.3
+      typescript: 4.9.4
     dev: true
 
   /@parcel/types/2.6.2:
@@ -1119,6 +1121,11 @@ packages:
     resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
     engines: {node: ^12.20.0 || >=14}
     dev: true
+
+  /cookie-store/3.0.0:
+    resolution: {integrity: sha512-9tPVv15oPqXnf+MbxlMYZDcOL9jkBs6N192xQ1ITq5dQn6qeOAoFmDGnW8pRL/U/Djkap1LfoVt2H5sRweBvSQ==}
+    engines: {node: '>= 10.16'}
+    dev: false
 
   /cosmiconfig/7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
@@ -1857,8 +1864,8 @@ packages:
       posthtml-render: 3.0.0
     dev: true
 
-  /prettier/2.8.0:
-    resolution: {integrity: sha512-9Lmg8hTFZKG0Asr/kW9Bp8tJjRVluO8EJQVfY2T7FMw9T5jy4I/Uvx0Rca/XWf50QQ1/SS48+6IJWnrb+2yemA==}
+  /prettier/2.8.1:
+    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -2093,10 +2100,10 @@ packages:
     peerDependencies:
       typedoc: 0.22.x || 0.23.x
     dependencies:
-      typedoc: 0.23.21_typescript@4.9.3
+      typedoc: 0.23.21_typescript@4.9.4
     dev: true
 
-  /typedoc/0.23.21_typescript@4.9.3:
+  /typedoc/0.23.21_typescript@4.9.4:
     resolution: {integrity: sha512-VNE9Jv7BgclvyH9moi2mluneSviD43dCE9pY8RWkO88/DrEgJZk9KpUk7WO468c9WWs/+aG6dOnoH7ccjnErhg==}
     engines: {node: '>= 14.14'}
     hasBin: true
@@ -2107,11 +2114,11 @@ packages:
       marked: 4.2.2
       minimatch: 5.1.0
       shiki: 0.11.1
-      typescript: 4.9.3
+      typescript: 4.9.4
     dev: true
 
-  /typescript/4.9.3:
-    resolution: {integrity: sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==}
+  /typescript/4.9.4:
+    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
