@@ -1,4 +1,4 @@
-import 'cookie-store';
+import type {} from 'cookie-store';
 import { observable, computed, action } from 'mobx';
 
 export * from './utility';

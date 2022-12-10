@@ -4,7 +4,7 @@ specifiers:
   '@parcel/packager-ts': ~2.6.2
   '@parcel/transformer-typescript-types': ~2.6.2
   '@swc/helpers': ^0.4.14
-  cookie-store: ^3.0.0
+  cookie-store: ^4.0.0-next.2
   husky: ^8.0.2
   lint-staged: ^13.1.0
   mobx: ^5.15.7
@@ -17,12 +17,12 @@ specifiers:
 
 dependencies:
   '@swc/helpers': 0.4.14
-  cookie-store: 3.0.0
   regenerator-runtime: 0.13.11
 
 devDependencies:
   '@parcel/packager-ts': 2.6.2
   '@parcel/transformer-typescript-types': 2.6.2_typescript@4.9.4
+  cookie-store: 4.0.0-next.2
   husky: 8.0.2
   lint-staged: 13.1.0
   mobx: 5.15.7
@@ -1122,10 +1122,10 @@ packages:
     engines: {node: ^12.20.0 || >=14}
     dev: true
 
-  /cookie-store/3.0.0:
-    resolution: {integrity: sha512-9tPVv15oPqXnf+MbxlMYZDcOL9jkBs6N192xQ1ITq5dQn6qeOAoFmDGnW8pRL/U/Djkap1LfoVt2H5sRweBvSQ==}
-    engines: {node: '>= 10.16'}
-    dev: false
+  /cookie-store/4.0.0-next.2:
+    resolution: {integrity: sha512-aGEBnCDLFw61rtkRkBP7rMrwTr+M/y3DPV9wvddqOxurxP+VpGFyNwLGOOJix0awn+BlvP9kVPiISKHgUG0/ew==}
+    engines: {node: '>= 14'}
+    dev: true
 
   /cosmiconfig/7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
