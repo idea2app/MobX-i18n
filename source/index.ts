@@ -1,5 +1,6 @@
-import type {} from 'cookie-store';
 import { observable, computed, action } from 'mobx';
+
+import { parseCookie } from './utility';
 
 export * from './utility';
 
@@ -50,13 +51,9 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         if (!globalThis.window) return;
 
-        window.cookieStore
-            .get({ name: 'language' })
-            .then(item =>
-                this.loadLanguages(
-                    [item?.value, ...navigator.languages].filter(Boolean)
-                )
-            );
+        this.loadLanguages(
+            [parseCookie().language, ...navigator.languages].filter(Boolean)
+        );
         window.addEventListener('languagechange', () =>
             this.changeLanguage(navigator.language as Name)
         );
@@ -66,10 +63,8 @@ export class TranslationModel<Name extends string, Key extends string> {
         this.currentLanguage = name;
 
         if (globalThis.document)
-            window.cookieStore.set(
-                'language',
-                (document.documentElement.lang = name)
-            );
+            document.cookie = `language=${(document.documentElement.lang =
+                name)}`;
     }
 
     @action

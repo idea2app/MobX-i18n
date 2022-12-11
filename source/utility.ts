@@ -15,6 +15,10 @@ export const textJoin = (...parts: string[]) =>
         })
         .join('');
 
+export const parseCookie = <T extends Record<string, string>>(
+    value = document.cookie
+): T => Object.fromEntries(value.split(/;\s*/).map(item => item.split('=')));
+
 export const parseLanguageHeader = (value: string) =>
     value
         .split(',')

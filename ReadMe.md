@@ -22,18 +22,8 @@ Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
 
 ### Installation
 
-#### NPM packages
-
 ```shell
 npm i mobx@5 mobx-react@6 mobx-i18n
-```
-
-#### Polyfill CDN
-
-```html
-<head>
-    <script src="https://unpkg.com/cookie-store@3.0.0/index.js"></script>
-</head>
 ```
 
 ### Configuration
