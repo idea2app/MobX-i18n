@@ -75,7 +75,7 @@ export const i18n = new TranslationModel({
     'en-US': () => import('../translation/en-US')
 });
 
-export const LanguageName: Record<typeof i18n['currentLanguage'], string> = {
+export const LanguageName: Record<(typeof i18n)['currentLanguage'], string> = {
     'zh-CN': '简体中文',
     'en-US': 'English'
 };
@@ -130,7 +130,9 @@ export default class HomePage extends PureComponent {
 
 ## Inspired by
 
-https://github.com/infinum/react-mobx-translatable
+1. https://github.com/infinum/react-mobx-translatable
+2. https://github.com/jverhoelen/react-mobx-i18n
+3. https://github.com/QuiiBz/next-international
 
 [1]: https://www.typescriptlang.org/
 [2]: https://github.com/mobxjs/mobx/tree/mobx4and5/docs

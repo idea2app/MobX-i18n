@@ -1,6 +1,6 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, reaction } from 'mobx';
 
-import { parseCookie } from './utility';
+import { parseCookie, setCookie } from './utility';
 
 export * from './utility';
 
@@ -51,20 +51,36 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         if (!globalThis.window) return;
 
-        this.loadLanguages(
-            [parseCookie().language, ...navigator.languages].filter(Boolean)
-        );
+        const languages = [
+            parseCookie().language,
+            ...(navigator.languages || [this.defaultLanguage])
+        ].filter(Boolean);
+
+        this.loadLanguages(languages);
+
         window.addEventListener('languagechange', () =>
             this.changeLanguage(navigator.language as Name)
+        );
+    }
+
+    onLanguageChange(handler: (language: Name) => any) {
+        var lastLanguage = this.currentLanguage;
+
+        reaction(
+            () => this.currentLanguage,
+            currentLanguage => {
+                if (lastLanguage) handler.call(this, currentLanguage);
+
+                lastLanguage = currentLanguage;
+            }
         );
     }
 
     protected setLanguage(name: Name) {
         this.currentLanguage = name;
 
-        if (globalThis.document)
-            document.cookie = `language=${(document.documentElement.lang =
-                name)}`;
+        if (globalThis.document?.documentElement)
+            setCookie('language', (document.documentElement.lang = name));
     }
 
     @action
