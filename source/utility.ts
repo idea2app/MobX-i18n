@@ -16,8 +16,43 @@ export const textJoin = (...parts: string[]) =>
         .join('');
 
 export const parseCookie = <T extends Record<string, string>>(
-    value = document.cookie
-): T => Object.fromEntries(value.split(/;\s*/).map(item => item.split('=')));
+    value = globalThis.document.cookie
+): T =>
+    value
+        ? Object.fromEntries(value.split(/;\s*/).map(item => item.split('=')))
+        : {};
+
+export interface CookieAttribute {
+    domain?: string;
+    path?: string;
+    expires?: Date;
+    'max-age'?: number;
+    samesite?: 'lax' | 'strict' | 'none';
+    secure?: boolean;
+    partitioned?: boolean;
+}
+
+export function setCookie(
+    key: string,
+    value: string,
+    attributes: CookieAttribute = {}
+) {
+    const data = `${key}=${value}`,
+        option = Object.entries(attributes)
+            .map(([key, value]) =>
+                typeof value === 'boolean'
+                    ? value
+                        ? key
+                        : ''
+                    : `${key}=${value}`
+            )
+            .filter(Boolean)
+            .join('; ');
+
+    document.cookie = `${data}; expires=${new Date(0)}`;
+
+    return (document.cookie = `${data}; ${option}`);
+}
 
 export const parseLanguageHeader = (value: string) =>
     value
