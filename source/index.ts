@@ -1,4 +1,5 @@
 import { observable, computed, action, reaction } from 'mobx';
+import * as MobX from 'mobx';
 
 import { parseCookie, setCookie } from './utility';
 
@@ -31,10 +32,10 @@ export class TranslationModel<Name extends string, Key extends string> {
     defaultLanguage: Name;
 
     @observable
-    currentLanguage: Name;
+    currentLanguage = '' as Name;
 
     @observable
-    currentMap: TranslationMap<Key> = {} as TranslationMap<Key>;
+    currentMap = {} as TranslationMap<Key>;
 
     @computed
     get defaultMap() {
@@ -42,6 +43,8 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     constructor(public configuration: TranslationConfiguration<Name, Key>) {
+        MobX.makeObservable?.(this);
+
         for (const name in configuration)
             if (typeof configuration[name] !== 'function')
                 this.defaultLanguage = name;
