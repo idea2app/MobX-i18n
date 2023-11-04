@@ -2,9 +2,11 @@
 
 Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 
-[![CI & CD](https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml/badge.svg)][3]
+[![MobX compatibility](https://img.shields.io/badge/Compatible-1?logo=mobx&label=MobX%204%2F5%2F6)][2]
+[![NPM Dependency](https://img.shields.io/librariesio/github/idea2app/MobX-i18n.svg)][3]
+[![CI & CD](https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml/badge.svg)][4]
 
-[![NPM](https://nodei.co/npm/mobx-i18n.png?downloads=true&downloadRank=true&stars=true)][4]
+[![NPM](https://nodei.co/npm/mobx-i18n.png?downloads=true&downloadRank=true&stars=true)][5]
 
 ## Features
 
@@ -23,7 +25,7 @@ Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
 ### Installation
 
 ```shell
-npm i mobx@5 mobx-react@6 mobx-i18n
+npm i mobx mobx-react mobx-i18n
 ```
 
 ### Configuration
@@ -34,6 +36,7 @@ npm i mobx@5 mobx-react@6 mobx-i18n
 {
     "compilerOptions": {
         "target": "ES5",
+        "useDefineForClassFields": false,
         "experimentalDecorators": true
     }
 }
@@ -136,5 +139,6 @@ export default class HomePage extends PureComponent {
 
 [1]: https://www.typescriptlang.org/
 [2]: https://github.com/mobxjs/mobx/tree/mobx4and5/docs
-[3]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
-[4]: https://nodei.co/npm/mobx-i18n/
+[3]: https://libraries.io/npm/mobx-i18n
+[4]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
+[5]: https://nodei.co/npm/mobx-i18n/

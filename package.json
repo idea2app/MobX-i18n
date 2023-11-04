@@ -1,6 +1,6 @@
 {
     "name": "mobx-i18n",
-    "version": "0.4.0",
+    "version": "0.4.2",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
     "description": "Responsive Translation utility based on TypeScript & MobX",
@@ -24,24 +24,23 @@
     },
     "source": "source/index.ts",
     "types": "dist/index.d.ts",
-    "module": "dist/index.esm.js",
     "main": "dist/index.js",
     "dependencies": {
-        "@swc/helpers": "^0.5.1",
+        "@swc/helpers": "^0.5.3",
         "regenerator-runtime": "^0.14.0"
     },
     "peerDependencies": {
         "mobx": ">=4"
     },
     "devDependencies": {
-        "@parcel/packager-ts": "~2.9.3",
-        "@parcel/transformer-typescript-types": "~2.9.3",
+        "@parcel/packager-ts": "~2.10.2",
+        "@parcel/transformer-typescript-types": "~2.10.2",
         "husky": "^8.0.3",
-        "lint-staged": "^14.0.1",
-        "mobx": "^6.10.0",
-        "parcel": "~2.9.3",
-        "prettier": "^3.0.2",
-        "typedoc": "^0.25.0",
+        "lint-staged": "^15.0.2",
+        "mobx": "^6.10.2",
+        "parcel": "~2.10.2",
+        "prettier": "^3.0.3",
+        "typedoc": "^0.25.3",
         "typedoc-plugin-mdn-links": "^3.1.0",
         "typescript": "~5.2.2"
     },

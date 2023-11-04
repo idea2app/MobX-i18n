@@ -83,7 +83,9 @@ export class TranslationModel<Name extends string, Key extends string> {
         this.currentLanguage = name;
 
         if (globalThis.document?.documentElement)
-            setCookie('language', (document.documentElement.lang = name));
+            setCookie('language', (document.documentElement.lang = name), {
+                path: '/'
+            });
     }
 
     @action
