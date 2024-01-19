@@ -14,13 +14,13 @@ dependencies:
 
 devDependencies:
   '@parcel/config-default':
-    specifier: ^2.11.0
+    specifier: ~2.11.0
     version: 2.11.0(@parcel/core@2.11.0)(@swc/helpers@0.5.3)(typescript@5.3.3)
   '@parcel/packager-ts':
     specifier: ~2.11.0
     version: 2.11.0
   '@parcel/transformer-typescript-tsc':
-    specifier: ^2.11.0
+    specifier: ~2.11.0
     version: 2.11.0(typescript@5.3.3)
   '@parcel/transformer-typescript-types':
     specifier: ~2.11.0
