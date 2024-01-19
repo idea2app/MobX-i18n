@@ -2,7 +2,7 @@
 
 Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 
-[![MobX compatibility](https://img.shields.io/badge/Compatible-1?logo=mobx&label=MobX%204%2F5%2F6)][2]
+[![MobX compatibility](https://img.shields.io/badge/Compatible-1?logo=mobx&label=MobX%206%2F7)][2]
 [![NPM Dependency](https://img.shields.io/librariesio/github/idea2app/MobX-i18n.svg)][3]
 [![CI & CD](https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml/badge.svg)][4]
 
@@ -17,6 +17,13 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 -   [x] **Async loading** of Language packages
 -   [x] support **HTTP protocol** for **Server-side rendering**
 -   [x] support BOM/DOM language API for Client-side rendering
+
+## Versions
+
+|  SemVer   |  branch  |    status    | ES decorator |    MobX     |
+| :-------: | :------: | :----------: | :----------: | :---------: |
+| `>=0.5.0` |  `main`  | ✅developing |   stage-3    |  `>=6.11`   |
+| `<0.5.0`  | `master` | ❌deprecated |   stage-2    | `>=4 <6.11` |
 
 ## React/Next.js example
 
@@ -35,9 +42,9 @@ npm i mobx mobx-react mobx-i18n
 ```json
 {
     "compilerOptions": {
-        "target": "ES5",
-        "useDefineForClassFields": false,
-        "experimentalDecorators": true
+        "target": "ES6",
+        "useDefineForClassFields": true,
+        "experimentalDecorators": false
     }
 }
 ```
@@ -138,7 +145,7 @@ export default class HomePage extends PureComponent {
 3. https://github.com/QuiiBz/next-international
 
 [1]: https://www.typescriptlang.org/
-[2]: https://github.com/mobxjs/mobx/tree/mobx4and5/docs
+[2]: https://mobx.js.org/
 [3]: https://libraries.io/npm/mobx-i18n
 [4]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
 [5]: https://nodei.co/npm/mobx-i18n/

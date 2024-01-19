@@ -2,9 +2,9 @@
     "compilerOptions": {
         "module": "UMD",
         "moduleResolution": "Node",
-        "experimentalDecorators": true,
-        "target": "ES5",
-        "lib": ["ES2022", "DOM"],
+        "useDefineForClassFields": true,
+        "target": "ES6",
+        "lib": ["ES2023", "DOM"],
         "declaration": true,
         "outDir": "dist/"
     },
