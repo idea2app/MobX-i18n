@@ -17,6 +17,7 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 -   [x] **Async loading** of Language packages
 -   [x] support **HTTP protocol** for **Server-side rendering**
 -   [x] support BOM/DOM language API for Client-side rendering
+-   [x] [Speech Synthesis API][6] for **Text-to-Speech** (TTS)
 
 ## Versions
 
@@ -32,7 +33,7 @@ Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
 ### Installation
 
 ```shell
-npm i mobx mobx-react mobx-i18n
+npm i mobx mobx-react mobx-i18n next-ssr-middleware
 ```
 
 ### Configuration
@@ -94,21 +95,16 @@ export const LanguageName: Record<(typeof i18n)['currentLanguage'], string> = {
 #### `pages/index.ts`
 
 ```tsx
-import { GetServerSideProps } from 'next';
-import { textJoin, parseLanguageHeader } from 'mobx-i18n';
+import { textJoin } from 'mobx-i18n';
+import { compose, translator } from 'next-ssr-middleware';
+import { Component } from 'react';
 
-import { i18n, LanguageName } from 'model/Translation';
+import { i18n, LanguageName } from '../model/Translation';
 
-export const getServerSideProps: GetServerSideProps = ({ req }) => {
-    const languages = parseLanguageHeader(req.headers['accept-language'] || '');
-
-    await i18n.loadLanguages(languages);
-
-    return { props: {} };
-};
+export const getServerSideProps = compose(translator(i18n));
 
 @observer
-export default class HomePage extends PureComponent {
+export default class HomePage extends Component {
     render() {
         const { currentLanguage, t } = i18n;
 
@@ -149,3 +145,4 @@ export default class HomePage extends PureComponent {
 [3]: https://libraries.io/npm/mobx-i18n
 [4]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
 [5]: https://nodei.co/npm/mobx-i18n/
+[6]: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis

@@ -5,6 +5,7 @@
         "useDefineForClassFields": true,
         "target": "ES6",
         "lib": ["ES2023", "DOM"],
+        "skipLibCheck": true,
         "declaration": true,
         "outDir": "dist/"
     },
