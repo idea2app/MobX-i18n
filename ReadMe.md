@@ -26,7 +26,7 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 | `>=0.5.0` |  `main`  | ✅developing |   stage-3    |  `>=6.11`   |
 | `<0.5.0`  | `master` | ❌deprecated |   stage-2    | `>=4 <6.11` |
 
-## React/Next.js example
+## Text internationalization (React/Next.js example)
 
 Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
 
@@ -92,7 +92,7 @@ export const LanguageName: Record<(typeof i18n)['currentLanguage'], string> = {
 };
 ```
 
-#### `pages/index.ts`
+#### `pages/index.tsx`
 
 ```tsx
 import { textJoin } from 'mobx-i18n';
@@ -128,6 +128,57 @@ export default class HomePage extends Component {
                         b: textJoin(t('open_source'), t('project'))
                     })}
                 </p>
+            </>
+        );
+    }
+}
+```
+
+## Text to Speech (WebCell example)
+
+### `pages/article.tsx`
+
+```tsx
+import { component, observer } from 'web-cell';
+import { SpeechSynthesisModel, SpeechSynthesisState } from 'mobx-i18n';
+
+@component({ tagName: 'article-page' })
+@observer
+export class ArticlePage extends HTMLElement {
+    storeTTS = new SpeechSynthesisModel();
+
+    toggleSpeaking = () => {
+        const { storeTTS } = this;
+
+        if (storeTTS.state !== SpeechSynthesisState.Clear)
+            return storeTTS.toggle();
+
+        const text = SpeechSynthesisModel.getReadableText(
+            this.querySelector('article')
+        );
+        storeTTS.speak(text);
+    };
+
+    render() {
+        const speaking = this.storeTTS.state === SpeechSynthesisState.Speaking;
+
+        return (
+            <>
+                <button
+                    style={{ background: speaking ? 'red' : 'blue' }}
+                    onClick={this.toggleSpeaking}
+                >
+                    {speaking ? '🔇' : '📢'}
+                </button>
+                <article>
+                    <h1>The Four Freedoms</h1>
+                    <ol>
+                        <li>Freedom of speech and expression</li>
+                        <li>Freedom of worship</li>
+                        <li>Freedom from want</li>
+                        <li>Freedom from fear</li>
+                    </ol>
+                </article>
             </>
         );
     }

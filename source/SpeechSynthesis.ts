@@ -83,19 +83,22 @@ export class SpeechSynthesisModel {
     }
 
     static *walk(range: Range) {
-        const walker = document.createNodeIterator(
-            range.commonAncestorContainer
-        );
+        const { commonAncestorContainer, endContainer } = range;
+        const walker = document.createNodeIterator(commonAncestorContainer);
         var current: Node;
 
         while ((current = walker.nextNode())) {
             if (range.intersectsNode(current)) yield current;
 
-            if (current === range.endContainer) break;
+            if (
+                commonAncestorContainer !== endContainer &&
+                current === endContainer
+            )
+                break;
         }
     }
 
-    static getSelectedText(box?: Element) {
+    static getSelectedText(box?: Element | null) {
         const range = getSelection()?.getRangeAt(0);
 
         if (!range?.toString() || !box?.contains(range.commonAncestorContainer))
@@ -122,7 +125,7 @@ export class SpeechSynthesisModel {
             .trim();
     }
 
-    static getReadableText(box?: Element) {
+    static getReadableText(box?: Element | null) {
         try {
             return this.getSelectedText(box);
         } catch {
