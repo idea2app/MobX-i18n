@@ -51,6 +51,7 @@ export class TranslationModel<Name extends string, Key extends string> {
         if (!globalThis.window) return;
 
         const languages = [
+            document.documentElement.lang,
             parseCookie().language,
             ...(navigator.languages || [this.defaultLanguage])
         ].filter(Boolean) as Name[];

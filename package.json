@@ -1,6 +1,6 @@
 {
     "name": "mobx-i18n",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
     "description": "Responsive Translation utility based on TypeScript & MobX",
