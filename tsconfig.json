@@ -2,10 +2,11 @@
     "compilerOptions": {
         "module": "UMD",
         "moduleResolution": "Node",
+        "esModuleInterop": true,
         "useDefineForClassFields": true,
         "target": "ES6",
         "lib": ["ES2023", "DOM"],
-        "types": ["jest"],
+        "types": ["node", "jest"],
         "skipLibCheck": true,
         "declaration": true,
         "outDir": "dist/"

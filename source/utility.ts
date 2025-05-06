@@ -16,11 +16,11 @@ export const textJoin = (...parts: string[]) =>
         .join('');
 
 export const parseCookie = <T extends Record<string, string>>(
-    value = globalThis.document.cookie
-): T =>
-    value
+    value = globalThis.document?.cookie
+) =>
+    (value
         ? Object.fromEntries(value.split(/;\s*/).map(item => item.split('=')))
-        : {};
+        : {}) as T;
 
 export interface CookieAttribute {
     domain?: string;
