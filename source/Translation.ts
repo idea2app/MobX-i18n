@@ -1,6 +1,7 @@
+import { IncomingHttpHeaders } from 'http';
 import { action, computed, observable, reaction } from 'mobx';
 
-import { parseCookie, setCookie } from './utility';
+import { parseCookie, parseLanguageHeader, setCookie } from './utility';
 
 export type TranslationResolver<T extends Record<string, any> = any> = (
     data: T
@@ -52,12 +53,12 @@ export class TranslationModel<Name extends string, Key extends string> {
         const languages = [
             parseCookie().language,
             ...(navigator.languages || [this.defaultLanguage])
-        ].filter(Boolean);
+        ].filter(Boolean) as Name[];
 
-        this.loadLanguages(languages);
+        this.loadLanguages(...languages);
 
         window.addEventListener('languagechange', () =>
-            this.changeLanguage(navigator.language as Name)
+            this.loadLanguages(navigator.language as Name)
         );
     }
 
@@ -80,43 +81,19 @@ export class TranslationModel<Name extends string, Key extends string> {
     }
 
     @action
-    async changeLanguage(name: Name) {
-        const language = this.configuration[name];
-
-        if (typeof language !== 'function') {
-            this.setLanguage(name);
-
-            return (this.currentMap = language as TranslationMap<Key>);
-        }
+    async loadLanguages(...names: Name[]) {
         this.loading = true;
 
-        const { default: map } = await language();
+        const {
+            language = this.defaultLanguage,
+            languageMap = this.configuration[this.defaultLanguage]
+        } = (await loadLanguageMap(this.configuration, names)) || {};
 
         this.loading = false;
 
-        this.setLanguage(name);
+        this.setLanguage(language);
 
-        return (this.currentMap = this.configuration[name] = map);
-    }
-
-    async loadLanguages(names: string[]) {
-        const languages = Object.keys(this.configuration).sort(
-            ({ length: a }, { length: b }) => b - a
-        );
-
-        for (const name of names) {
-            const language = languages.includes(name)
-                ? name
-                : languages.find(
-                      language =>
-                          name.startsWith(language) || language.startsWith(name)
-                  );
-            if (language)
-                try {
-                    return await this.changeLanguage(language as Name);
-                } catch {}
-        }
-        return this.changeLanguage(this.defaultLanguage);
+        return (this.currentMap = languageMap as TranslationMap<Key>);
     }
 
     textOf<K extends Key>(
@@ -136,3 +113,53 @@ export class TranslationModel<Name extends string, Key extends string> {
 
     t = this.textOf.bind(this) as TranslationModel<Name, Key>['textOf'];
 }
+
+export const loadLanguageMap = async <N extends string, K extends string>(
+    configuration: TranslationConfiguration<N, K>,
+    names: N[]
+) => {
+    const languages = Object.keys(configuration).sort(
+        ({ length: a }, { length: b }) => b - a
+    );
+
+    for (const name of names) {
+        const language = (
+            languages.includes(name)
+                ? name
+                : languages.find(
+                      language =>
+                          name.startsWith(language) || language.startsWith(name)
+                  )
+        ) as N;
+
+        if (!language) continue;
+
+        try {
+            const languageMap = configuration[language];
+
+            if (typeof languageMap !== 'function')
+                return { language, languageMap } as {
+                    language: N;
+                    languageMap: TranslationMap<K>;
+                };
+            const { default: data } = await languageMap();
+
+            configuration[language] = data;
+
+            return { language, languageMap: data };
+        } catch {}
+    }
+};
+
+export const loadLanguageMapFrom = <N extends string, K extends string>(
+    configuration: TranslationConfiguration<N, K>,
+    { 'accept-language': acceptLanguage, cookie }: IncomingHttpHeaders
+) => {
+    const { language } = parseCookie(cookie || ''),
+        languages = parseLanguageHeader(acceptLanguage || '');
+
+    return loadLanguageMap(
+        configuration,
+        [language, ...languages].filter(Boolean) as N[]
+    );
+};

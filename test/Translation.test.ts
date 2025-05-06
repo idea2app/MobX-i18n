@@ -1,3 +1,5 @@
+import { sleep } from 'web-utility';
+
 import { TranslationModel } from '../source/Translation';
 import { textJoin } from '../source/utility';
 
@@ -21,28 +23,30 @@ describe('Translation', () => {
                 `${name}的標題是《${title}》`
         } as const;
 
-    it('should match the User-agent Language', () => {
+    it('should match the User-agent Language', async () => {
         expect(navigator.language).toBe('en-US');
         expect(document.cookie).toBe('');
 
-        const { currentLanguage, t } = new TranslationModel({
-            'en-US': en_US,
-            'zh-CN': zh_CN
-        });
-        expect(currentLanguage).toBe('en-US');
-        expect(t('title')).toBe(en_US.title);
+        const i18n = new TranslationModel({ 'en-US': en_US, 'zh-CN': zh_CN });
+
+        await sleep();
+
+        expect(i18n.currentLanguage).toBe('en-US');
+        expect(i18n.t('title')).toBe(en_US.title);
         expect(document.cookie).toBe('language=en-US');
     });
 
-    it('should use the Default Language while mismatch the User-agent Language', () => {
+    it('should use the Default Language while mismatch the User-agent Language', async () => {
         expect(document.cookie).toBe('language=en-US');
 
-        const { currentLanguage, t } = new TranslationModel({
+        const i18n = new TranslationModel({
             'zh-CN': zh_CN,
             'zh-TW': async () => ({ default: zh_TW })
         });
-        expect(currentLanguage).toBe('zh-CN');
-        expect(t('title')).toBe(zh_CN.title);
+        await sleep();
+
+        expect(i18n.currentLanguage).toBe('zh-CN');
+        expect(i18n.t('title')).toBe(zh_CN.title);
         expect(document.documentElement.lang).toBe('zh-CN');
         expect(document.cookie).toBe('language=zh-CN');
     });
@@ -52,13 +56,13 @@ describe('Translation', () => {
             'zh-CN': zh_CN,
             'zh-TW': async () => ({ default: zh_TW })
         });
-        const loaded = i18n.loadLanguages(['zh-TW']);
+        await sleep();
 
         expect(i18n.currentLanguage).toBe('zh-CN');
         expect(i18n.t('title')).toBe(zh_CN.title);
         expect(document.documentElement.lang).toBe('zh-CN');
 
-        await loaded;
+        await i18n.loadLanguages('zh-TW');
 
         expect(i18n.currentLanguage).toBe('zh-TW');
         expect(i18n.t('title')).toBe(zh_TW.title);

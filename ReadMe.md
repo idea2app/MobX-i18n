@@ -10,14 +10,14 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 
 ## Features
 
--   [x] **Type hinting** of Text keys
--   [x] **Lambda Expression** values
--   [x] Space utility for CJK & other characters
--   [x] **Responsive re-rendering**
--   [x] **Async loading** of Language packages
--   [x] support **HTTP protocol** for **Server-side rendering**
--   [x] support BOM/DOM language API for Client-side rendering
--   [x] [Speech Synthesis API][6] for **Text-to-Speech** (TTS)
+- [x] **Type hinting** of Text keys
+- [x] **Lambda Expression** values
+- [x] Space utility for CJK & other characters
+- [x] **Responsive re-rendering**
+- [x] **Async loading** of Language packages
+- [x] support **HTTP protocol** for **Server-side rendering**
+- [x] support BOM/DOM language API for Client-side rendering
+- [x] [Speech Synthesis API][6] for **Text-to-Speech** (TTS)
 
 ## Versions
 
@@ -26,14 +26,14 @@ Responsive **Translation** utility based on [TypeScript][1] & [MobX][2]
 | `>=0.5.0` |  `main`  | ✅developing |   stage-3    |  `>=6.11`   |
 | `<0.5.0`  | `master` | ❌deprecated |   stage-2    | `>=4 <6.11` |
 
-## Text internationalization (React/Next.js example)
+## Text internationalization (React example)
 
-Original from https://github.com/kaiyuanshe/kaiyuanshe.github.io
+Original from https://github.com/idea2app/React-MobX-Bootstrap-ts
 
 ### Installation
 
 ```shell
-npm i mobx mobx-react mobx-i18n next-ssr-middleware
+npm i mobx mobx-react mobx-i18n
 ```
 
 ### Configuration
@@ -92,47 +92,45 @@ export const LanguageName: Record<(typeof i18n)['currentLanguage'], string> = {
 };
 ```
 
-#### `pages/index.tsx`
+#### `page/index.tsx`
 
 ```tsx
 import { textJoin } from 'mobx-i18n';
-import { compose, translator } from 'next-ssr-middleware';
-import { Component } from 'react';
+import { observer } from 'mobx-react';
 
 import { i18n, LanguageName } from '../model/Translation';
 
-export const getServerSideProps = compose(translator(i18n));
+export const HomePage = observer(() => {
+    const { currentLanguage, t } = i18n;
 
-@observer
-export default class HomePage extends Component {
-    render() {
-        const { currentLanguage, t } = i18n;
-
-        return (
-            <>
-                <select
-                    value={currentLanguage}
-                    onChange={({ currentTarget: { value } }) =>
-                        i18n.changeLanguage(value as typeof currentLanguage)
-                    }
-                >
-                    {Object.entries(LanguageName).map(([code, name]) => (
-                        <option key={code} value={code}>
-                            {name}
-                        </option>
-                    ))}
-                </select>
-                <p>
-                    {t('love', {
-                        a: '我',
-                        b: textJoin(t('open_source'), t('project'))
-                    })}
-                </p>
-            </>
-        );
-    }
-}
+    return (
+        <>
+            <select
+                value={currentLanguage}
+                onChange={({ currentTarget: { value } }) =>
+                    i18n.loadLanguages(value as typeof currentLanguage)
+                }
+            >
+                {Object.entries(LanguageName).map(([code, name]) => (
+                    <option key={code} value={code}>
+                        {name}
+                    </option>
+                ))}
+            </select>
+            <p>
+                {t('love', {
+                    a: '我',
+                    b: textJoin(t('open_source'), t('project'))
+                })}
+            </p>
+        </>
+    );
+});
 ```
+
+### Server Side Rendering (Next.js example)
+
+You can use [React Context API][7] to share the `TranslationModel` instance cross Class & Function components in Client & Server runtimes, which has been all set in an [One-key Template Repository][8].
 
 ## Text to Speech (WebCell example)
 
@@ -197,3 +195,5 @@ export class ArticlePage extends HTMLElement {
 [4]: https://github.com/idea2app/MobX-i18n/actions/workflows/main.yml
 [5]: https://nodei.co/npm/mobx-i18n/
 [6]: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
+[7]: https://legacy.reactjs.org/docs/context.html#passing-info-automatically-through-a-tree
+[8]: https://github.com/idea2app/Next-Bootstrap-ts
