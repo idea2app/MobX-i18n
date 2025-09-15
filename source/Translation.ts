@@ -1,7 +1,8 @@
 import { IncomingHttpHeaders } from 'http';
 import { action, computed, observable, reaction } from 'mobx';
+import { parseCookie, setCookie } from 'web-utility';
 
-import { parseCookie, parseLanguageHeader, setCookie } from './utility';
+import { parseLanguageHeader } from './utility';
 
 export type TranslationResolver<T extends Record<string, any> = any> = (
     data: T
@@ -51,9 +52,9 @@ export class TranslationModel<Name extends string, Key extends string> {
         if (!globalThis.window) return;
 
         const languages = [
-            document.documentElement.lang,
             parseCookie().language,
-            ...(navigator.languages || [this.defaultLanguage])
+            ...(navigator.languages || [this.defaultLanguage]),
+            document.documentElement.lang
         ].filter(Boolean) as Name[];
 
         this.loadLanguages(...languages);
