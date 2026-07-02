@@ -53,8 +53,8 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         const languages = [
             parseCookie().language,
-            ...(navigator.languages || [this.defaultLanguage]),
-            document.documentElement.lang
+            document.documentElement.lang,
+            ...(navigator.languages || [this.defaultLanguage])
         ].filter(Boolean) as Name[];
 
         this.loadLanguages(...languages);
