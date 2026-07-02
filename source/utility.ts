@@ -73,6 +73,9 @@ const reviveFunction = (source: string) => {
  *
  * Only use this with data from a trusted source,
  * because function sources are executed via the {@link Function} constructor.
+ *
+ * Note: the revived function is created from source text, so closures/bindings
+ * from the original function are not preserved.
  */
 export const decodeFunctions = (_key: string, value: unknown) =>
     isSerializedFunctionNode(value)

@@ -132,6 +132,80 @@ export const HomePage = observer(() => {
 
 You can use [React Context API][7] to share the `TranslationModel` instance cross Class & Function components in Client & Server runtimes, which has been all set in an [One-key Template Repository][8].
 
+If you use React server components with Next.js app router, you should share Translation Data between server and client as below, which is from another [One-key Template Repository][9].
+
+#### `translation/en-US.ts`
+
+```ts
+import { encodeFunctions } from 'mobx-i18n';
+
+export default {
+    toJSON: encodeFunctions,
+    i18nKey1: 'i18nValue1',
+    i18nKey2: ({ someKey }: { someKey: string }) => `i18nValue2: ${someKey}`
+    // ...
+} as const;
+```
+
+#### `translation/context.tsx`
+
+```tsx
+'use client';
+
+import {
+    TranslationModel,
+    SerializedFunctions,
+    decodeFunctions
+} from 'mobx-i18n';
+import { createContext, FC, PropsWithChildren } from 'react';
+
+import enUS from './en-US';
+
+export const I18nContext = createContext(
+    new TranslationModel({ 'en-US': enUS })
+);
+
+export type I18nProviderProps = PropsWithChildren<{
+    language: string;
+    languageMap: SerializedFunctions<typeof enUS>;
+}>;
+
+export const I18nProvider: FC<I18nProviderProps> = ({
+    language,
+    languageMap,
+    children
+}) => {
+    const i18n = new TranslationModel({
+        [language]: decodeFunctions(languageMap)
+    });
+    return <I18nContext.Provider value={i18n}>{children}</I18nContext.Provider>;
+};
+```
+
+#### `app/layout.tsx`
+
+```tsx
+import { PropsWithChildren } from 'react';
+
+import { I18nProvider } from '../translation/context';
+import enUS from '../translation/en-US';
+
+export default async function RootLayout({ children }: PropsWithChildren) {
+    const language = 'en-US';
+
+    return (
+        <html lang={language}>
+            <head />
+            <body>
+                <I18nProvider language={language} languageMap={enUS}>
+                    {children}
+                </I18nProvider>
+            </body>
+        </html>
+    );
+}
+```
+
 ## Text to Speech (WebCell example)
 
 ### `pages/article.tsx`
@@ -197,3 +271,4 @@ export class ArticlePage extends HTMLElement {
 [6]: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
 [7]: https://legacy.reactjs.org/docs/context.html#passing-info-automatically-through-a-tree
 [8]: https://github.com/idea2app/Next-Bootstrap-ts
+[9]: https://github.com/idea2app/Next-shadcn-ts
