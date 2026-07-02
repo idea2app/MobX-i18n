@@ -1,4 +1,8 @@
-import { decodeFunctions, encodeFunctions } from '../source/utility';
+import {
+    decodeFunctions,
+    encodeFunctions,
+    SerializedFunctionNode
+} from '../source/utility';
 
 describe('encodeFunctions / decodeFunctions', () => {
     const translationMap = {
@@ -14,12 +18,9 @@ describe('encodeFunctions / decodeFunctions', () => {
         expect(parsed.title).toBe('标题');
         expect(typeof parsed.detail).toBe('object');
         expect(
-            (parsed.detail as Record<string, unknown>)['__serializedFunction__']
+            (parsed.detail as SerializedFunctionNode)['__serializedFunction__']
         ).toEqual(expect.any(String));
-        expect(typeof parsed.toJSON).toBe('object');
-        expect(
-            (parsed.toJSON as Record<string, unknown>)['__serializedFunction__']
-        ).toEqual(expect.any(String));
+        expect(parsed.toJSON).toBeUndefined();
     });
 
     it('should deserialize serialized functions back to callable functions', () => {

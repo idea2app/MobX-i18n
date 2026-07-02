@@ -24,10 +24,10 @@ const serializeFunctionMembers = <T>(value: T): SerializedFunctions<T> => {
             [FUNCTION_MARKER]: value.toString()
         } as SerializedFunctions<T>;
 
-    if (Array.isArray(value))
-        return value.map(serializeFunctionMembers) as SerializedFunctions<T>;
-
     if (value && typeof value === 'object') {
+        if (Array.isArray(value))
+            return value.map(serializeFunctionMembers) as SerializedFunctions<T>;
+
         const output: Record<string, unknown> = {};
 
         for (const [key, item] of Object.entries(value))
@@ -42,7 +42,8 @@ const serializeFunctionMembers = <T>(value: T): SerializedFunctions<T> => {
 export function encodeFunctions(
     this: Record<string, unknown>
 ): SerializedFunctions<Record<string, unknown>> {
-    return serializeFunctionMembers(this);
+    const { toJSON, ...rest } = this;
+    return serializeFunctionMembers(rest);
 }
 
 const isSerializedFunctionNode = (
@@ -69,12 +70,10 @@ const reviveFunction = (source: string) => {
  * {@link encodeFunctions}.  Only use this with data from a trusted source,
  * because function sources are executed via the `Function` constructor.
  */
-export const decodeFunctions = (_key: string, value: unknown) => {
-    if (isSerializedFunctionNode(value))
-        return reviveFunction(value[FUNCTION_MARKER]);
-
-    return value;
-};
+export const decodeFunctions = (_key: string, value: unknown) =>
+    isSerializedFunctionNode(value)
+        ? reviveFunction(value[FUNCTION_MARKER])
+        : value;
 
 export const textJoin = (...parts: string[]) =>
     parts
