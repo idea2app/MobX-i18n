@@ -18,8 +18,8 @@ importers:
         specifier: ^0.14.1
         version: 0.14.1
       web-utility:
-        specifier: ^4.7.1
-        version: 4.7.1(typescript@5.9.3)
+        specifier: ^4.7.2
+        version: 4.7.2(typescript@5.9.3)
     devDependencies:
       '@parcel/config-default':
         specifier: ~2.16.4
@@ -1100,8 +1100,8 @@ packages:
   base-x@3.0.11:
     resolution: {integrity: sha512-xz7wQ8xDhdyP7tQxwdteLYeFfS68tSMNCZ/Y37WJ4bhGfKPpqEIlmIyueQHqOyoPhE6xNUqjzRr8ra0eF9VRvA==}
 
-  baseline-browser-mapping@2.10.40:
-    resolution: {integrity: sha512-BSSLZ9/Cjjv7Gtj5B68ZzXcXUg8iOf3fme+FCuh8rC/Go+Kmh8cox7M3A8dolou16s64QjLPOSdngh7GxXvkSw==}
+  baseline-browser-mapping@2.10.41:
+    resolution: {integrity: sha512-WwS7MHhqGHHlaVsqRZnhvCEMS0owDX+SxRlve7JkuH7My1Ara3ZriTmCQupPfYjxMZ8I/tgxtJYr2t7taHaH4A==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1305,8 +1305,8 @@ packages:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
 
-  electron-to-chromium@1.5.383:
-    resolution: {integrity: sha512-I2484/KkAvl8lm9VyjH2JnbOIV0d/UCqT7gbzs6l+o6Vmn9wgB66uVcKX+Vk6HrXtY6fbWTOEXuv8waDTuFNCw==}
+  electron-to-chromium@1.5.385:
+    resolution: {integrity: sha512-78sa/M08MNAYHQfjoWMvOlKQqZ0ElhSm/L5HNUc96VZ3b+KvDVnngFm8sYQy0XrhTRgAhggHr5abA7yTvRdo4Q==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -1848,8 +1848,8 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  linkify-it@5.0.1:
-    resolution: {integrity: sha512-wVoTjP4Q6R0NW5hiZkVJaFZPWgtXfoGF+6LucL3/FtiNjmcHhYjEr5f1Kqjirc1nBW07J/ZuRFumqr2oqccEWg==}
+  linkify-it@5.0.2:
+    resolution: {integrity: sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==}
 
   lint-staged@17.0.8:
     resolution: {integrity: sha512-B2P/d+jVW0UXOQ0MVMLrB/9ydA1P+zz6jYfdrbbEd9ur3S2rcbduFWKiUCC02Sm5hbC8nrm7y24WuYMG54HfxA==}
@@ -1891,8 +1891,8 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  markdown-it@14.2.0:
-    resolution: {integrity: sha512-1TGiQiJVRQ3NPmZH6sx5Cfnmg6GQm9jvC1ch4TK511NjSJvjzKLzn5pPfZRNZkRPZP0HqCioSndqH8v2nRaWVQ==}
+  markdown-it@14.3.0:
+    resolution: {integrity: sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==}
     hasBin: true
 
   math-intrinsics@1.1.0:
@@ -2053,8 +2053,8 @@ packages:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.4:
-    resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
+  picomatch@4.0.5:
+    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
   pirates@4.0.7:
@@ -2406,8 +2406,8 @@ packages:
   weak-lru-cache@1.2.2:
     resolution: {integrity: sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==}
 
-  web-utility@4.7.1:
-    resolution: {integrity: sha512-6b7Yuu9IH34SzXeU6jqPa7tXN7KBgUwT6b9KVd/Nm0T3aDwcROOUgCDbxLwDams8VE5ySLELmej3tLRl48cRzg==}
+  web-utility@4.7.2:
+    resolution: {integrity: sha512-yGT8E4HOI/kYgkOYIz7dKxkMMqhDfV85QH8EvaWThLeSStnLtjVyd83JDDqGiYkrD/zVDMhaWOiIR077NuEDpw==}
     peerDependencies:
       element-internals-polyfill: '>=1'
       typescript: '>=4.1'
@@ -3605,7 +3605,7 @@ snapshots:
       detect-libc: 2.1.2
       is-glob: 4.0.3
       node-addon-api: 7.1.1
-      picomatch: 4.0.4
+      picomatch: 4.0.5
     optionalDependencies:
       '@parcel/watcher-android-arm64': 2.5.6
       '@parcel/watcher-darwin-arm64': 2.5.6
@@ -3921,7 +3921,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  baseline-browser-mapping@2.10.40: {}
+  baseline-browser-mapping@2.10.41: {}
 
   brace-expansion@1.1.15:
     dependencies:
@@ -3938,9 +3938,9 @@ snapshots:
 
   browserslist@4.28.4:
     dependencies:
-      baseline-browser-mapping: 2.10.40
+      baseline-browser-mapping: 2.10.41
       caniuse-lite: 1.0.30001800
-      electron-to-chromium: 1.5.383
+      electron-to-chromium: 1.5.385
       node-releases: 2.0.50
       update-browserslist-db: 1.2.3(browserslist@4.28.4)
 
@@ -4092,7 +4092,7 @@ snapshots:
       es-errors: 1.3.0
       gopd: 1.2.0
 
-  electron-to-chromium@1.5.383: {}
+  electron-to-chromium@1.5.385: {}
 
   emittery@0.13.1: {}
 
@@ -4802,14 +4802,14 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
-  linkify-it@5.0.1:
+  linkify-it@5.0.2:
     dependencies:
       uc.micro: 2.1.0
 
   lint-staged@17.0.8:
     dependencies:
       listr2: 10.2.2
-      picomatch: 4.0.4
+      picomatch: 4.0.5
       string-argv: 0.3.2
       tinyexec: 1.2.4
     optionalDependencies:
@@ -4868,11 +4868,11 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  markdown-it@14.2.0:
+  markdown-it@14.3.0:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
-      linkify-it: 5.0.1
+      linkify-it: 5.0.2
       mdurl: 2.0.0
       punycode.js: 2.3.1
       uc.micro: 2.1.0
@@ -5031,7 +5031,7 @@ snapshots:
 
   picomatch@2.3.2: {}
 
-  picomatch@4.0.4: {}
+  picomatch@4.0.5: {}
 
   pirates@4.0.7: {}
 
@@ -5282,7 +5282,7 @@ snapshots:
     dependencies:
       '@gerrit0/mini-shiki': 3.23.0
       lunr: 2.3.9
-      markdown-it: 14.2.0
+      markdown-it: 14.3.0
       minimatch: 10.2.5
       typescript: 5.9.3
       yaml: 2.9.0
@@ -5329,7 +5329,7 @@ snapshots:
 
   weak-lru-cache@1.2.2: {}
 
-  web-utility@4.7.1(typescript@5.9.3):
+  web-utility@4.7.2(typescript@5.9.3):
     dependencies:
       '@swc/helpers': 0.5.23
       regenerator-runtime: 0.14.1

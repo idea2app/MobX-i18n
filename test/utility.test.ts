@@ -7,26 +7,21 @@ import {
 describe('Functions serialization in JSON', () => {
     const translationMap = {
         title: '标题',
-        detail: ({ name }: { name: string }) => `${name}的标题`,
-        toJSON: encodeFunctions
+        detail: ({ name }: { name: string }) => `${name}的标题`
     };
 
     it('should serialize function members to their source code', () => {
-        const json = JSON.stringify(translationMap);
-        const {
-            title,
-            detail,
-            toJSON
-        }: SerializedFunctions<typeof translationMap> = JSON.parse(json);
+        const json = JSON.stringify(translationMap, encodeFunctions);
+        const { title, detail }: SerializedFunctions<typeof translationMap> =
+            JSON.parse(json);
 
         expect(title).toBe('标题');
         expect(typeof detail).toBe('object');
         expect(detail.__serializedFunction__).toEqual(expect.any(String));
-        expect(toJSON).toBeUndefined();
     });
 
     it('should deserialize serialized functions back to callable functions', () => {
-        const json = JSON.stringify(translationMap);
+        const json = JSON.stringify(translationMap, encodeFunctions);
 
         const { title, detail }: typeof translationMap = JSON.parse(
             json,
@@ -39,10 +34,9 @@ describe('Functions serialization in JSON', () => {
 
     it('should handle nested objects with functions', () => {
         const nested = {
-            inner: { fn: (x: number) => x * 2 },
-            toJSON: encodeFunctions
+            inner: { fn: (x: number) => x * 2 }
         };
-        const json = JSON.stringify(nested);
+        const json = JSON.stringify(nested, encodeFunctions);
         const { inner }: typeof nested = JSON.parse(json, decodeFunctions);
 
         expect(typeof inner.fn).toBe('function');
@@ -51,10 +45,9 @@ describe('Functions serialization in JSON', () => {
 
     it('should handle arrays of functions', () => {
         const withArray = {
-            handlers: [(x: number) => x + 1, (x: number) => x * 2],
-            toJSON: encodeFunctions
+            handlers: [(x: number) => x + 1, (x: number) => x * 2]
         };
-        const json = JSON.stringify(withArray);
+        const json = JSON.stringify(withArray, encodeFunctions);
 
         const { handlers }: typeof withArray = JSON.parse(
             json,

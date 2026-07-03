@@ -16,37 +16,18 @@ export type SerializedFunctions<T> = T extends (...args: any[]) => any
           ? { [K in keyof T]: SerializedFunctions<T[K]> }
           : T;
 
-const serializeFunctionMembers = <T>(value: T): SerializedFunctions<T> => {
-    if (typeof value === 'function')
-        return { [FUNCTION_MARKER]: value + '' } as SerializedFunctions<T>;
-
-    if (Array.isArray(value))
-        return value.map(serializeFunctionMembers) as SerializedFunctions<T>;
-
-    if (!value || typeof value !== 'object')
-        return value as SerializedFunctions<T>;
-
-    const output: Record<string, unknown> = {};
-
-    for (const [key, item] of Object.entries(value))
-        output[key] = serializeFunctionMembers(item);
-
-    return output as SerializedFunctions<T>;
-};
-
 /**
- * Use as a `toJSON` method on an object to serialize its function members to their source code,
- * which is invoked automatically by {@link JSON.stringify}.  
+ * Replacer callback for {@link JSON.stringify} that serializes function members
+ * to their source code.
  *
  * The serialized functions can be restored using {@link decodeFunctions}.
  */
-export function encodeFunctions(
-    this: Record<string, unknown>
-): SerializedFunctions<Record<string, unknown>> {
-    const { toJSON, ...rest } = this;
-
-    return serializeFunctionMembers(toJS(rest));
-}
+export const encodeFunctions = (_key: string, value: unknown): unknown =>
+    typeof value === 'function'
+        ? ({ [FUNCTION_MARKER]: value + '' } satisfies SerializedFunctionNode)
+        : value && typeof value === 'object'
+          ? toJS(value)
+          : value;
 
 const isSerializedFunctionNode = (
     value: unknown

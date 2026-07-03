@@ -137,10 +137,7 @@ If you use React server components with Next.js app router, you should share Tra
 #### `translation/en-US.ts`
 
 ```ts
-import { encodeFunctions } from 'mobx-i18n';
-
 export default {
-    toJSON: encodeFunctions,
     i18nKey1: 'i18nValue1',
     i18nKey2: ({ someKey }: { someKey: string }) => `i18nValue2: ${someKey}`
     // ...
@@ -152,11 +149,7 @@ export default {
 ```tsx
 'use client';
 
-import {
-    TranslationModel,
-    SerializedFunctions,
-    decodeFunctions
-} from 'mobx-i18n';
+import { TranslationModel, decodeFunctions } from 'mobx-i18n';
 import { createContext, FC, PropsWithChildren } from 'react';
 
 import enUS from './en-US';
@@ -165,10 +158,9 @@ export const I18nContext = createContext(
     new TranslationModel({ 'en-US': enUS })
 );
 
-export type I18nProviderProps = PropsWithChildren<{
-    language: string;
-    languageMap: SerializedFunctions<typeof enUS>;
-}>;
+export type I18nProviderProps = PropsWithChildren<
+    Record<'language' | 'languageMap', string>
+>;
 
 export const I18nProvider: FC<I18nProviderProps> = ({
     language,
@@ -176,7 +168,7 @@ export const I18nProvider: FC<I18nProviderProps> = ({
     children
 }) => {
     const i18n = new TranslationModel({
-        [language]: decodeFunctions(languageMap)
+        [language]: JSON.parse(languageMap, decodeFunctions)
     });
     return <I18nContext.Provider value={i18n}>{children}</I18nContext.Provider>;
 };
@@ -186,18 +178,20 @@ export const I18nProvider: FC<I18nProviderProps> = ({
 
 ```tsx
 import { PropsWithChildren } from 'react';
+import { encodeFunctions } from 'mobx-i18n';
 
 import { I18nProvider } from '../translation/context';
 import enUS from '../translation/en-US';
 
 export default async function RootLayout({ children }: PropsWithChildren) {
     const language = 'en-US';
+    const languageMap = JSON.stringify(enUS, encodeFunctions);
 
     return (
         <html lang={language}>
             <head />
             <body>
-                <I18nProvider language={language} languageMap={enUS}>
+                <I18nProvider language={language} languageMap={languageMap}>
                     {children}
                 </I18nProvider>
             </body>

@@ -1,6 +1,6 @@
 {
     "name": "mobx-i18n",
-    "version": "0.7.4",
+    "version": "0.7.5",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
     "description": "Responsive Translation utility based on TypeScript & MobX",
@@ -30,7 +30,7 @@
         "@swc/helpers": "^0.5.23",
         "@types/node": "^24.13.2",
         "regenerator-runtime": "^0.14.1",
-        "web-utility": "^4.7.1"
+        "web-utility": "^4.7.2"
     },
     "peerDependencies": {
         "mobx": ">=6.11"
