@@ -14,9 +14,13 @@
     "include": ["source/*"],
     "typedocOptions": {
         "name": "MobX i18n",
+        "includeVersion": true,
         "excludeExternals": true,
         "excludePrivate": true,
         "readme": "./ReadMe.md",
-        "plugin": ["typedoc-plugin-mdn-links"]
+        "plugin": ["typedoc-plugin-mdn-links"],
+        "navigationLinks": {
+            "GitHub": "https://github.com/idea2app/MobX-i18n"
+        }
     }
 }
