@@ -59,7 +59,7 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         this.loadLanguages(...languages);
 
-        window.addEventListener('languagechange', () =>
+        window?.addEventListener?.('languagechange', () =>
             this.loadLanguages(navigator.language as Name)
         );
     }
