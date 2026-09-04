@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "module": "UMD",
-        "moduleResolution": "Node",
+        "module": "CommonJS",
+        "moduleResolution": "bundler",
         "esModuleInterop": true,
         "useDefineForClassFields": true,
         "target": "ES6",
@@ -9,6 +9,7 @@
         "types": ["node", "jest"],
         "skipLibCheck": true,
         "declaration": true,
+        "rootDir": ".",
         "outDir": "dist/"
     },
     "include": ["source/*"],

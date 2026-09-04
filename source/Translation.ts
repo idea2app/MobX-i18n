@@ -28,7 +28,7 @@ export class TranslationModel<Name extends string, Key extends string> {
     @observable
     accessor loading = false;
 
-    defaultLanguage: Name;
+    defaultLanguage = '' as Name;
 
     @observable
     accessor currentLanguage = '' as Name;
@@ -53,8 +53,8 @@ export class TranslationModel<Name extends string, Key extends string> {
 
         const languages = [
             parseCookie().language,
-            document.documentElement.lang,
-            ...(navigator.languages || [this.defaultLanguage])
+            document?.documentElement.lang,
+            ...(navigator?.languages || [this.defaultLanguage])
         ].filter(Boolean) as Name[];
 
         this.loadLanguages(...languages);

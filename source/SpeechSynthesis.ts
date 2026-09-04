@@ -53,7 +53,9 @@ export class SpeechSynthesisModel {
         content.voice =
             voices.find(
                 ({ localService, lang }) => localService && lang === language
-            ) || voices.find(({ default: backup }) => backup);
+            ) ||
+            voices.find(({ default: backup }) => backup) ||
+            null;
 
         const result = new Promise((resolve, reject) => {
             content.onend = resolve;
@@ -85,7 +87,7 @@ export class SpeechSynthesisModel {
     static *walk(range: Range) {
         const { commonAncestorContainer, endContainer } = range;
         const walker = document.createNodeIterator(commonAncestorContainer);
-        var current: Node;
+        var current: Node | null;
 
         while ((current = walker.nextNode())) {
             if (range.intersectsNode(current)) yield current;
@@ -115,12 +117,12 @@ export class SpeechSynthesisModel {
                 return width && height;
             })
             .map(({ nodeValue }, index, { length }) =>
-                nodeValue.slice(
+                nodeValue?.slice(
                     index === 0 ? range.startOffset : 0,
                     index === length - 1 ? range.endOffset : Infinity
                 )
             )
-            .filter(text => text.trim())
+            .filter(text => text?.trim())
             .join('')
             .trim();
     }
@@ -129,7 +131,7 @@ export class SpeechSynthesisModel {
         try {
             return this.getSelectedText(box);
         } catch {
-            return getVisibleText(box);
+            return box ? getVisibleText(box) : '';
         }
     }
 }
